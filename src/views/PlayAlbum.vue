@@ -1,17 +1,17 @@
 <template>
-    <div>
+    <div class="w-full">
         <Header/>
-        <Content/>
+        <ListMusic/>
     </div>
 </template>
 <script>
 import Header from '../components/Header.vue'
-import Content from '../components/Content.vue'
+import ListMusic from '../components/ListMusic.vue'
 export default {
     name: 'SpotifyContent',
     components:{
         Header,
-        Content
+        ListMusic
     },
     data() {
        return{
@@ -19,7 +19,7 @@ export default {
        }
     },
     created(){
-
+        this.$store.dispatch('fetchYoungMusic');
     },
     mounted() {
         

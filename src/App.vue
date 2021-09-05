@@ -2,7 +2,7 @@
  <div class="bg-light">
     <div class="flex">
       <Side/>
-      <Home/>
+      <router-view/>
     </div>
       <PlayBottom/>
  </div>

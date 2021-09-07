@@ -91,11 +91,17 @@ export default {
         })
         this.emitter.on('count-index',data =>{
             this.audio.src = ''
-            this.index += data
+            this.index += data -1
             this.audio = new Audio(this.checkNextSong)
             this.audio.play()
         
         })
+        // this.emitter.on('pre-song',data=>{
+        //     this.audio.src = ''
+        //     // this.index -= data
+        //     this.audio = new Audio(this.checkNextSong)
+        //     this.audio.play()
+        // })
         console.log('dit nhau')
     },
     computed:{

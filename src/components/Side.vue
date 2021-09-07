@@ -3,14 +3,14 @@
         <div class="p-6">
           <img src="images/Spotify_Logo.png" class="h-10 object-cover" alt="">
         </div>
-        <div 
-        v-for="(page,index) in pages" :key="index"
-        @click="setId = page.id"
-        :class="`cursor-pointer flex items-center rounded text-sm font-semibold text-white px-4  ${setId === page.id ? 'bg-light text-white' : 'text-lightest' }`"
-        style="padding-top:2px;padding-bottom:2px">
+        <router-link :to="`/${page.id}`"
+          v-for="(page,index) in pages" :key="index"
+          @click="setId = page.id"
+          :class="`cursor-pointer flex items-center rounded text-sm font-semibold text-white px-4  ${setId === page.id ? 'bg-light text-white' : 'text-lightest' }`"
+          style="padding-top:2px;padding-bottom:2px">
           <i class="material-icons text-3xl">{{page.icon}}</i>
           <p class="ml-3">{{page.name}}</p>
-        </div>
+        </router-link >
         <div class="w-full text-lightest flex px-4 mt-6 cursor-pointer" style="padding-top:2px;padding-bottom:2px">
           <i class="material-icons text-3xl">add_box</i>
           <p class="ml-3">Tạo playlist</p>

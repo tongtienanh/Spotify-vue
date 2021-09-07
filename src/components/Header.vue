@@ -4,14 +4,21 @@
         @scroll="scrollFn"
         :class="`w-full h-full sticky top-0 p-2 z-10 ${ scroll ? 'bg-black' : ''}`">
             <div class="flex justify-between px-8 py-4">
-                <div class="flex">
+                <div class="flex items-center">
                     <button class="rounded-full h-8 w-8 bg-dark mr-2 flex justify-center items-center ">
                         <i class="material-icons text-lightest font-thin ">arrow_back_ios_new</i>
                     </button>
                     <button class="rounded-full h-8 w-8 bg-dark mr-2 flex justify-center items-center ">
                         <i class="material-icons text-lightest transform rotate-180 font-thin">arrow_back_ios_new</i>
                     </button>
-                    <input v-if="$route.path == '/search'" class="w-91 h-10 rounded-full py-2 px-12 relative" placeholder="Nghệ sỹ, bài hát hoặc Postcast" type="text">
+                    <div v-if="$route.path == '/search'" class="relative">
+                    <input  class=" h-10 rounded-full py-2 px-12 text-sm outline-none"
+                             v-model="searchText"
+                             @change="inputText"
+                             placeholder="Nghệ sỹ, bài hát hoặc Postcast" type="text" style="width:364px">
+                    <span class="material-icons absolute left-3 top-1 text-dark text-3xl">search</span>
+                    </div>
+
                 </div>
                     <div class="flex items-center">
                         <div 
@@ -63,7 +70,8 @@ export default {
             ],
             hover: 'Tài khoản',
             show: false,
-            scroll:false
+            scroll:false,
+            searchText:null
         };
     },
     created(){
@@ -83,6 +91,9 @@ export default {
              this.scroll = false
          }
         },
+        inputText(){
+           this.emitter.emit('search-text',this.searchText)
+        }
     },
 };
 </script>

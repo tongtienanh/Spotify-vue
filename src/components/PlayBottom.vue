@@ -21,7 +21,7 @@
                         <button>
                             <i class="material-icons text-alo hover:text-lightest">shuffle</i>
                         </button>
-                        <button>
+                        <button @click="preSong">
                             <i class="material-icons text-alo ml-4 hover:text-lightest">skip_previous</i>
                         </button>
                     </div>
@@ -119,6 +119,10 @@ export default {
             this.count++
             this.emitter.emit('count-index',this.count)
               
+        },
+        preSong(){
+            this.count--
+            this.emitter.emit('pre-song',this.count)
         }
     },
     computed:{

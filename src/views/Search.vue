@@ -1,15 +1,20 @@
 <template>
     <div class="w-full">
         <Header/>
+        <keep-alive>
+            <searchRent/>
+        </keep-alive>
     </div>
 </template>
 
 <script>
 import Header from '../components/Header.vue'
+import searchRent from '../components/SearchContent.vue'
 export default {
     name: 'SpotifySearch',
     components:{
-        Header  
+        Header,
+        searchRent
     },
     data() {
         return {
@@ -17,7 +22,7 @@ export default {
         };
     },
     created(){
-        console.log(this.$route)
+        this.$store.dispatch('fetchYoungMusic');
     },
     mounted() {
         

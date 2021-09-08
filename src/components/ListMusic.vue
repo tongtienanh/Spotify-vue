@@ -81,27 +81,64 @@ export default {
 
     mounted() {
         this.emitter.on('play-or-pause',data =>{
-            this.pause = data
-            if(data){
-                this.audio.pause()
-            }
+            this.isPlaying = data
+            this.isPlaying ? this.audio.play() : this.audio.pause()
         })
          this.emitter.on('seek-time',data =>{
             this.audio.currentTime = data
         })
         this.emitter.on('count-index',data =>{
             this.audio.src = ''
-            this.index += data -1
-            this.audio = new Audio(this.checkNextSong)
+            this.index += data
+            this.audio = new Audio(this.checkNextSong.music)
             this.audio.play()
-        
+            this.emitter.emit('play-song',{data:this.checkNextSong,isPlaying:this.isPlaying,isData:this.isData})
+            var that = this
+            that.audio.addEventListener("loadeddata", function() {
+                    that.emitter.emit('duration-time',this.duration)
+                    that.durationTime = this.duration
+                });
+                that.audio.ontimeupdate = function(){
+                    that.emitter.emit('process-time',{process:Math.round(that.audio.currentTime / that.audio.duration * 100),current:Math.round(that.audio.currentTime)})
+                    
+                    that.processTime =Math.round(that.audio.currentTime / that.audio.duration * 100) 
+                    }
         })
-        // this.emitter.on('pre-song',data=>{
-        //     this.audio.src = ''
-        //     // this.index -= data
-        //     this.audio = new Audio(this.checkNextSong)
-        //     this.audio.play()
-        // })
+        this.emitter.on('random-song',data=>{
+            this.isPlaying = true
+            this.isData = true
+            this.index +=data
+            this.audio = new Audio(this.checkNextSong.music)
+            this.audio.play()
+            this.emitter.emit('play-song',{data:this.checkNextSong,isPlaying:this.isPlaying,isData:this.isData})
+            var that = this
+            that.audio.addEventListener("loadeddata", function() {
+                    that.emitter.emit('duration-time',this.duration)
+                    that.durationTime = this.duration
+                });
+                that.audio.ontimeupdate = function(){
+                    that.emitter.emit('process-time',{process:Math.round(that.audio.currentTime / that.audio.duration * 100),current:Math.round(that.audio.currentTime)})
+                    
+                    that.processTime =Math.round(that.audio.currentTime / that.audio.duration * 100) 
+                    }
+        })
+        this.emitter.on('pre-song',data=>{
+            this.audio.src = ''
+            this.index -= data
+            this.audio = new Audio(this.checkNextSong.music)
+            this.audio.play()
+            this.emitter.emit('play-song',{data:this.checkNextSong,isPlaying:this.isPlaying,isData:this.isData})
+            var that = this
+            that.audio.addEventListener("loadeddata", function() {
+                    that.emitter.emit('duration-time',this.duration)
+                    that.durationTime = this.duration
+                });
+                that.audio.ontimeupdate = function(){
+                    that.emitter.emit('process-time',{process:Math.round(that.audio.currentTime / that.audio.duration * 100),current:Math.round(that.audio.currentTime)})
+                    
+                    that.processTime =Math.round(that.audio.currentTime / that.audio.duration * 100) 
+                    }
+        })
         console.log('dit nhau')
     },
     computed:{
@@ -113,7 +150,7 @@ export default {
         },
         checkNextSong(){
             if(this.allSong[this.$route.params.id].songs[this.index]){
-                return this.allSong[this.$route.params.id].songs[this.index].music
+                return this.allSong[this.$route.params.id].songs[this.index]
             }
         }
     },
@@ -122,19 +159,54 @@ export default {
             this.audio.src= ''
             this.isPlaying = true
             this.isData = true
-            this.index = data.key + 1
+            this.index = data.key
             this.emitter.emit('play-song',{data:data.song,isPlaying:this.isPlaying,isData:this.isData})
             this.audio = new Audio(data.song.music)
             this.audio.play()
             var that = this
+             this.audio.addEventListener('ended',function(){
+                that.index +=1
+                console.log(that.index)
+                that.emitter.emit('play-song',{data:that.checkNextSong,isPlaying:that.isPlaying,isData:that.isData})
+                that.audio = new Audio(that.checkNextSong.music)
+                that.audio.play()
+                that.audio.addEventListener("loadeddata", function() {
+                    that.emitter.emit('duration-time',this.duration)
+                    that.durationTime = this.duration
+                });
+                that.audio.ontimeupdate = function(){
+                    that.emitter.emit('process-time',{process:Math.round(that.audio.currentTime / that.audio.duration * 100),current:Math.round(that.audio.currentTime)})
+                    
+                    that.processTime =Math.round(that.audio.currentTime / that.audio.duration * 100) 
+                    }
+            })
             this.audio.addEventListener("loadeddata", function() {
                 that.emitter.emit('duration-time',this.duration)
                 that.durationTime = this.duration
             });
             this.audio.ontimeupdate = function(){
-                that.emitter.emit('process-time',{process:Math.round(that.audio.currentTime / that.audio.duration * 100),current:Math.round(that.audio.currentTime)})
+                that.emitter.emit('process-time',{process:Math.round(that.audio.currentTime / that.audio.duration * 100),current:Math.round(this.currentTime)})
                 that.processTime =Math.round(that.audio.currentTime / that.audio.duration * 100) 
             }
+           
+        },
+        autoNext(){
+             this.audio.addEventListener('ended',function(){
+                that.index +=1
+                console.log(that.index)
+                that.emitter.emit('play-song',{data:that.checkNextSong,isPlaying:that.isPlaying,isData:that.isData})
+                that.audio = new Audio(that.checkNextSong.music)
+                that.audio.play()
+                that.audio.addEventListener("loadeddata", function() {
+                    that.emitter.emit('duration-time',this.duration)
+                    that.durationTime = this.duration
+                });
+                that.audio.ontimeupdate = function(){
+                    that.emitter.emit('process-time',{process:Math.round(that.audio.currentTime / that.audio.duration * 100),current:Math.round(that.audio.currentTime)})
+                    
+                    that.processTime =Math.round(that.audio.currentTime / that.audio.duration * 100) 
+                    }
+            })
         }
     },
 };

@@ -2,10 +2,10 @@
     <div>
     <h1 class="text-2xl text-white font-semibold mb-3 px-6 pt-8">Dành cho bạn</h1>
     <p class="text-lightest text-sm px-6">Thêm nhiều gợi ý hay hơn khi bạn nghe nhiều hơn.</p>
-    <div class="px-8 pt-6 grid grid-flow-col grid-cols-5 gap-6">
+    <div class="px-8 pt-6 grid grid-flow-col grid-cols-5 gap-6 ">
         <router-link 
         :to="`/album/${album.id}`"
-         class="w-full" 
+         class="w-full " 
          v-for="(album,index) in albums" :key="index">
             <div 
             @mousemove="hover = album.id"

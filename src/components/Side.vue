@@ -36,7 +36,7 @@ export default{
   data(){
     return {
       pages:[
-        {id:'home',  name:'Trang chủ',icon:'home'},
+        {id:'/',  name:'Trang chủ',icon:'home'},
         {id:'search', name:'Tìm kiếm',icon:'search'},
         {id:'library', name:'Thư viện',icon:'bar_chart'}
       ],
@@ -46,7 +46,7 @@ export default{
         'We bare bear',
         'Phê game music'
       ],
-      setId:'home'
+      setId:'/'
     }
   },
   methods:{

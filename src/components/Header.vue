@@ -8,7 +8,7 @@
                     <button class="rounded-full h-8 w-8 bg-dark mr-2 flex justify-center items-center ">
                         <i class="material-icons text-lightest font-thin ">arrow_back_ios_new</i>
                     </button>
-                    <button class="rounded-full h-8 w-8 bg-dark mr-2 flex justify-center items-center ">
+                    <button class="rounded-full h-8 w-8 bg-dark mr-2 flex justify-center items-center laptop:hidden ">
                         <i class="material-icons text-lightest transform rotate-180 font-thin">arrow_back_ios_new</i>
                     </button>
                     <div v-if="$route.path == '/search'" class="relative">
@@ -22,7 +22,7 @@
                 </div>
                     <div class="flex items-center">
                         <div 
-                        class="flex text-white">
+                        class="flex text-white desktop:hidden">
                             <p class="mr-6 font-semibold hover:scale-105 transform cursor-pointer ">Premium</p>
                             <p class="mr-6 font-semibold hover:scale-105 transform cursor-pointer ">Hỗ trợ</p>
                             <p class="font-semibold mr-6 hover:scale-105 transform cursor-pointer ">Tải xuống</p>

@@ -4,7 +4,7 @@ import PlayAlbum from '../views/PlayAlbum.vue'
 import Search from '../views/Search.vue'
 
 const routes = [{
-        path: '/home',
+        path: '/',
         name: 'Home',
         component: Home
     },

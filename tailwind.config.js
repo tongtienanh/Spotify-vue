@@ -22,11 +22,25 @@ module.exports = {
             },
             width: {
                 '3/2': '6px',
-            }
+            },
+            screens: {
+                'tablet': '640px',
+                // => @media (min-width: 640px) { ... }
+
+                'laptop': { 'max': '1024px' },
+                // => @media (min-width: 1024px) { ... }
+
+                'desktop': {
+                    'max': '1100px'
+                },
+                // => @media (max-width: 1110px) { ... }
+            },
         },
     },
     variants: {
-        extend: {},
+        extend: {
+            hidden: ['last']
+        },
     },
     plugins: [],
 }

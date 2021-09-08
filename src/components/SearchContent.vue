@@ -97,6 +97,9 @@ export default {
     },
     methods: {
         play(data){
+            if(this.audio != null){
+                this.audio.src = ''
+            }
             this.isData = true
             this.isPlaying = true
             this.audio = new Audio(data.music)

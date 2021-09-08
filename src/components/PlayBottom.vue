@@ -18,7 +18,7 @@
             <div>
                 <div class="w-full flex gap-2 mb-3">
                     <div class="flex justify-end">
-                        <button>
+                        <button @click="randomSong">
                             <i class="material-icons text-alo hover:text-lightest">shuffle</i>
                         </button>
                         <button @click="preSong">
@@ -26,7 +26,7 @@
                         </button>
                     </div>
                     <div 
-                    @click="pauseOrPlay,isPlaying = !isPlaying,pause = !pause"
+                    @click="puaseOrPlay"
                     class="w-8 h-8 rounded-full bg-lightest flex items-center justify-items-end transform hover:scale-110">
                         <i 
                         v-if="!isPlaying"
@@ -47,9 +47,9 @@
                 </div>
             </div>
             <div class="flex items-center justify-center w-full">
-                <div class="text-time text-xs mr-2">{{timeCurrent()}}</div>
+                <div class="text-time text-xs mr-2">{{timeCurrent}}</div>
                 <div class="h-1 relative w-full bg-light flex items-center">
-                    <input @change="rewindSong" id="progress" class="progress w-full h-1" type="range" :value="processTime" step="1" min="0" max="100">
+                    <input @change="rewindSong" id="progress" class="progress w-full h-1" type="range" :value="`${isData ? processTime : '0'}`" step="1" min="0" max="100">
                     <audio id="audio" src=""></audio>
                 </div>
                 <div class="text-time text-xs ml-2">{{duration()}}</div>
@@ -106,29 +106,32 @@ export default {
         duration(){
             return Math.round(this.durationTime/60) + ':' + (this.durationTime%10 < 10 ? '0' : '') + Math.round(this.durationTime%10)
         },
-        timeCurrent(){
-             return Math.round(this.currentTime/60) + ':' + (this.currentTime%10 < 10 ? '0' : '') + Math.round(this.currentTime%10)
-        },
+       randomSong(){
+           this.count = Math.round(Math.random()*100)
+           this.emitter.emit('random-song',Math.round(Math.random()*100))
+       },
         rewindSong(event){
             this.emitter.emit('seek-time',Math.round(this.durationTime /100 * event.target.value))
         },
         puaseOrPlay(){
-            this.emitter.emit('play-or-pause',this.pause)
+            if(this.isData){
+                this.isPlaying = !this.isPlaying
+            }
+            this.emitter.emit('play-or-pause',this.isPlaying)
         },
         nextSong(){
-            this.count++
-            this.emitter.emit('count-index',this.count)
+            this.emitter.emit('count-index',1)
               
         },
         preSong(){
-            this.count--
-            this.emitter.emit('pre-song',this.count)
+            this.emitter.emit('pre-song',1)
+            console.log(this.count)
         }
     },
     computed:{
-        // puaseOrPlay(){
-        //     return this.isPlaying = !this.isPlaying
-        // }
+        timeCurrent(){
+            return  (this.currentTime-(this.currentTime%=60))/60+(9<this.currentTime?':':':0')+this.currentTime
+        }
     }
 };
 </script>

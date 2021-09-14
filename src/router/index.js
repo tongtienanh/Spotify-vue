@@ -2,21 +2,57 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import PlayAlbum from '../views/PlayAlbum.vue'
 import Search from '../views/Search.vue'
+import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
+import LikedSong from '../views/LikedSong.vue'
 
 const routes = [{
         path: '/',
         name: 'Home',
+        meta: {
+            layout: 'default-layout',
+        },
         component: Home
     },
     {
         path: '/album/:id',
         name: 'PlayAlbum',
+        meta: {
+            layout: 'default-layout',
+        },
         component: PlayAlbum
     },
     {
         path: '/search',
         name: 'Search',
+        meta: {
+            layout: 'default-layout',
+        },
         component: Search
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        meta: {
+            layout: 'auth-layout',
+        },
+        component: Login
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        meta: {
+            layout: 'auth-layout',
+        },
+        component: Register
+    },
+    {
+        path: '/liked',
+        name: 'LikedSong',
+        meta: {
+            layout: 'default-layout',
+        },
+        component: LikedSong
     },
     {
         path: '/about',

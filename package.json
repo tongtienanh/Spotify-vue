@@ -8,10 +8,12 @@
     },
     "dependencies": {
         "@material-ui/core": "^4.12.3",
+        "babel": "^6.23.0",
+        "firebase": "4.8.0",
         "mitt": "^3.0.0",
         "vue": "^3.0.0",
-        "vue-owl-carousel": "^2.0.3",
         "vue-router": "^4.0.0-0",
+        "vue3-carousel": "^0.1.25",
         "vuex": "^4.0.2"
     },
     "devDependencies": {

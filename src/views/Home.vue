@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="w-inherit" style="width:-webkit-fill-available;">
         <Header/>
         <Content/>
     </div>

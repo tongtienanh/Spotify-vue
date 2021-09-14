@@ -5,12 +5,13 @@ const store = createStore({
         return {
             music: null,
             albums: [
-                { id: '0', img: 'images/nhactre100.jpg', title: 'Nhạc Trẻ Mới Nhất', dec: 'Danh sách tổng hợp nhạc mới hàng tuần. Cập nhật mỗi thứ Hai.' },
-                { id: '1', img: 'images/trutinh100.jpg', title: 'Nhạc Trữ Tình Bolero', dec: 'Nhún nhảy theo những giai điệu mới toanh từ nghệ sĩ bạn theo dõi và đĩa đơn mới dành cho bạn. Cập nhật mỗi thứ Sáu.' },
+                { id: '0', img: 'images/nhactre100.jpg', title: 'Nhạc Trẻ', dec: 'Nhạc mới hàng tuần' },
+                { id: '1', img: 'images/trutinh100.jpg', title: 'Nhạc Trữ', dec: 'Giai điệu mới toanh' },
                 { id: '2', img: 'images/rapviet100.jpg', title: 'Rap Việt', dec: 'Henry Jackman' },
                 { id: '3', img: 'images/remix100.jpg', title: 'Remix Việt ', dec: 'Henry Jackman' }
             ],
-            songs: null
+            songs: null,
+            likeSong: []
         }
     },
     mutations: {
@@ -20,6 +21,9 @@ const store = createStore({
         setSong(state, songPayload) {
             state.songs = songPayload
         },
+        setLikedSong(state, likedSongPayload) {
+            state.likeSong = likedSongPayload
+        }
     },
     actions: {
         async fetchYoungMusic({ commit }) {
@@ -32,7 +36,11 @@ const store = createStore({
             commit('setMusic', newArr)
             commit('setSong', song.flat())
 
-        }
+        },
+        likedSong({ commit }, payload) {
+            commit('setLikedSong', payload)
+            console.log(payload)
+        },
     }
 })
 export default store

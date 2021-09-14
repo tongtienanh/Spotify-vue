@@ -1,24 +1,16 @@
 <template>
- <div class="bg-light">
-    <div class="flex">
-      <Side/>
-      <router-view/>
-    </div>
-      <PlayBottom/>
- </div>
+  <component :is="layout">
+    <router-view />
+  </component>
 </template>
 <script>
-
-import Side from './components/Side.vue'
-import Home from './components/Home.vue'
-import PlayBottom from './components/PlayBottom.vue'
-
+import aboutLayout from './layout/auth.vue';
+import defaultLayout from './layout/default.vue';
 export default {
   name: 'SpotifyApp',
   components:{
-    Side,
-    Home,
-    PlayBottom
+    aboutLayout,
+    defaultLayout,
   },
   data() {
     return {
@@ -29,7 +21,11 @@ export default {
   mounted() {
     
   },
-
+  computed: {
+    layout() {
+      return this.$router.currentRoute.value.meta.layout;
+    }
+    },
   methods: {
     
   },

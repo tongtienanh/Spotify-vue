@@ -1,7 +1,7 @@
 <template>
     <div v-if="searchText" 
-    class="px-8 flex w-full">
-        <div>
+    class="px-8 flex w-full my-8">
+        <!-- <div>
             <h1 class="text-white font-bold text-2xl"> Kết quả hàng đầu </h1>
             <div class="rounded-md bg-darkest my-6 p-7 hover:bg-bg cursor-pointer" style="width:440px">
                 <div class="flex items-start px-3 flex-col">
@@ -13,8 +13,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="flex items-start flex-col w-full pl-6">
+        </div> -->
+        <div class="flex items-start flex-col w-full pl-6 xs:pl-0">
             <div class="flex justify-between w-full mb-6">
                 <h1 class="text-white font-bold text-2xl">Bài hát</h1>
                 <p class="text-time text-xs hover:underline">XEM TẤT CẢ</p>
@@ -29,18 +29,13 @@
                         <p class="text-time text-sm">{{item.creator}}</p>
                     </div>
                 </div>
-                <i class="material-icons text-white">favorite_border</i>
+                <i class="material-icons text-white"></i>
             </div>
         </div>
     </div>
 
-
-
-
-
-
-    <h1 class="text-white px-8 text-2xl font-bold">Các tìm kiếm gần đây</h1>
-    <div class="px-8 pt-6 grid grid-flow-col grid-cols-5 gap-6">
+<h1 class="text-white px-8 text-2xl font-bold">Các tìm kiếm gần đây</h1>
+    <div class="px-8 pt-6 grid grid-flow-col grid-cols-5 gap-6 sm:grid-cols-3 xs:grid-cols-1">
     <a href="/album/0" class="w-full relative">
         <div class="bg-dark rounded p-4 relative hover:bg-bg">
             <img src="images/nhactre100.jpg" class="rounded-sm" alt="" />
@@ -51,12 +46,17 @@
     </a>
     </div>
     <h1 class="text-white px-8 pt-8 text-2xl font-bold">Gợi ý tìm kiếm</h1>
-    <div class="px-8 grid grid-flow-col grid-cols-4 gap-6">
+    <div class="px-8 grid grid-flow-col grid-cols-4 gap-6 xs:grid-cols-1 ">
         <div class="mt-6 w-full rounded-lg relative bg-recommend col-span-2" style="height:220px">
             <h3 class="absolute left-0 top-0 text-4xl p-4 text-white font-bold">Pop</h3>
             <img src="https://t.scdn.co/images/0a74d96e091a495bb09c0d83210910c3" aria-hidden="false" draggable="false" class="absolute right-0 bottom-0 transform rotate-12 h-32 w-32" alt="">
         </div>
-    </div>
+    </div>  
+
+
+
+    <!--  -->
+    <!--  -->
    
 
 </template>
@@ -119,6 +119,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="css" scoped>
+    
 </style>

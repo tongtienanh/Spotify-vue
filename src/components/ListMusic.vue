@@ -2,7 +2,7 @@
     <div 
     v-for="(album,index) in albums" :key="index"
     class="flex px-10 items-center pb-6">
-        <div class="mr-8" style="width:232px;height:232px">
+        <div class="mr-8 xs:hidden" style="width:232px;height:232px ">
             <img :src="`/${album.img}`" class="h-full object-cover"  alt="">
         </div>
         <div class="flex flex-col">
@@ -45,14 +45,15 @@
             class="flex justify-between items-center mt-3 mb-3 cursor-pointer rounded-md px-3 pb-1 hover:bg-light">
                 <div 
                 class="flex items-center">
-                <span 
-                class="text-lightest">{{key+1}}</span>
-                <div class="flex flex-col ml-4">
-                    <p class="text-white font-semibold">{{song.title}}</p>
-                    <span class="text-time text-xs font-semibold">{{song.creator}}</span>
+                    <span 
+                        class="text-lightest">{{key+1}}
+                    </span>
+                    <div class="flex flex-col ml-4">
+                        <p class="text-white font-semibold">{{song.title}}</p>
+                        <span class="text-time text-xs font-semibold">{{song.creator}}</span>
+                    </div>
                 </div>
-                </div>
-                <span class="text-lightest material-icons" style="font-size: 18px;">favorite_border</span>
+                <span @click.stop="likeSong(song)" :class="isLike ? 'bg-green' : '' " class="text-lightest material-icons" style="font-size: 18px;">favorite_border</span>
             </div>
         </div>
     </div>
@@ -71,11 +72,13 @@ export default {
             hoved:false,
             durationTime:null,
             processTime:null,
-            audio,
+            audio:null,
             pause:null,
             allSong:null,
             index:null,
-            nextSong:null
+            nextSong:null,
+            isLike:null,
+            likedSong:[]
         };
     },
 
@@ -156,7 +159,9 @@ export default {
     },
     methods: {
         playSong(data){
-            this.audio.src= ''
+            if(this.audio){
+                this.audio.src= ''
+            }
             this.isPlaying = true
             this.isData = true
             this.index = data.key
@@ -207,6 +212,14 @@ export default {
                     that.processTime =Math.round(that.audio.currentTime / that.audio.duration * 100) 
                     }
             })
+        },
+        likeSong(song){
+            this.isLike ? this.isLike = false : this.isLike = true
+            if(this.isLike){
+                this.likedSong.push(song)
+            }
+            console.log(this.likedSong)
+            this.$store.dispatch('likedSong', this.likedSong)
         }
     },
 };

@@ -1,23 +1,23 @@
 <template>
-     <div class="w-full sticky bottom-0 flex items-center" style="height:12vh;background:#181818">
+     <div :class="isData ? 'sm:visible' : 'sm:invisible' " class="player-bottom w-full sticky bottom-0 flex items-center sm:justify-between sm:bottom-12" style="background:#181818">
          <div 
-         :class="`min-w-45 ${ isData ? 'visible' : 'invisible' }`" style="width:30%">
+         :class="`min-w-45 ${ isData ? 'visible' : 'invisible' }`" class="ml-6 w-2/6 sm:w-1/2">
              <div 
-             class="flex justify-center">
-                 <img :src="songInfos.avatar" class="w-14 h-14 rounded" alt="">
-                <div class="flex flex-col mx-4"> 
-                    <h3 class="text-white text-sm font-semibold hover:underline cursor-pointer">{{songInfos.title}}</h3>
+             class="flex justify-start">
+                 <img :src="songInfos.avatar" class="w-14 h-14 rounded sm:h-10 sm:w-10" alt="">
+                <div class="flex flex-col mx-4 sm:justify-center"> 
+                    <h3 class="text-white text-sm font-semibold hover:underline cursor-pointer whitespace-nowrap">{{songInfos.title}}</h3>
                     <small class="text-time hover:underline hover:text-white cursor-pointer">{{songInfos.creator}}</small>
                 </div>
-                <div class="flex justify-center items-center">
+                <div class="flex justify-center items-center sm:hidden">
                     <button><i class="material-icons text-time text-xl hover:text-white">favorite_border</i></button>
                 </div>
              </div>
          </div>
-         <div class="w-2/5 flex justify-center items-center flex-col">
+         <div class="w-2/5 flex justify-center items-center flex-col sm:w-auto">
             <div>
-                <div class="w-full flex gap-2 mb-3">
-                    <div class="flex justify-end">
+                <div class="w-full flex gap-2 mb-3 sm:mb-0">
+                    <div class="flex justify-end sm:hidden">
                         <button @click="randomSong">
                             <i class="material-icons text-alo hover:text-lightest">shuffle</i>
                         </button>
@@ -27,7 +27,7 @@
                     </div>
                     <div 
                     @click="puaseOrPlay"
-                    class="w-8 h-8 rounded-full bg-lightest flex items-center justify-items-end transform hover:scale-110">
+                    class="w-8 h-8 rounded-full bg-lightest flex items-center justify-items-end transform sm:mr-8 hover:scale-110">
                         <i 
                         v-if="!isPlaying"
                         class="material-icons text-black text-center ml-1 cursor-pointer ">play_arrow</i>
@@ -36,7 +36,7 @@
                         class="material-icons text-black text-center ml-1 cursor-pointer ">pause</i>
                     </div>
 
-                    <div class="justify-start">
+                    <div class="justify-start sm:hidden">
                         <button @click="nextSong">
                             <i class="material-icons text-alo hover:text-lightest">skip_next</i>
                         </button>
@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex items-center justify-center w-full">
+            <div class="flex items-center justify-center w-full sm:hidden">
                 <div class="text-time text-xs mr-2">{{timeCurrent}}</div>
                 <div class="h-1 relative w-full bg-light flex items-center">
                     <input @change="rewindSong" id="progress" class="progress w-full h-1" type="range" :value="`${isData ? processTime : '0'}`" step="1" min="0" max="100">
@@ -55,7 +55,7 @@
                 <div class="text-time text-xs ml-2">{{duration()}}</div>
             </div>
          </div>
-         <div style="width:30%">
+         <div class="sm:hidden" style="width:30%">
              <div class="flex justify-center items-center ">
                  <button>
                      <i class="material-icons text-xl text-alo hover:text-lightest">playlist_play</i> 
@@ -136,5 +136,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
+    .player-bottom{
+        height: 12vh;
+    }
+    @media (min-width: 375px) and (max-width: 768px){
+        .player-bottom{
+            height: 10vh;
+        }
+    }
 </style>

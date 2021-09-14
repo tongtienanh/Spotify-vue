@@ -10,7 +10,7 @@
                     <small class="text-time hover:underline hover:text-white cursor-pointer">{{songInfos.creator}}</small>
                 </div>
                 <div class="flex justify-center items-center sm:hidden">
-                    <button><i class="material-icons text-time text-xl hover:text-white">favorite_border</i></button>
+                    <button><i class="material-icons text-time text-xl hover:text-white"></i></button>
                 </div>
              </div>
          </div>
@@ -58,14 +58,15 @@
          <div class="sm:hidden" style="width:30%">
              <div class="flex justify-center items-center ">
                  <button>
-                     <i class="material-icons text-xl text-alo hover:text-lightest">playlist_play</i> 
+                     <i class="material-icons text-xl text-alo hover:text-lightest"></i> 
                  </button>
                  <button class="mr-3">
                      <i class="material-icons text-xl text-alo hover:text-lightest">volume_up</i> 
                  </button>
-                <div class="h-1 relative w-1/3 bg-light flex items-center">
+                    <input @change="volumeControl" type="range" class="w-1/3 h-1">
+                <!-- <div class="h-1 relative w-1/3 bg-light flex items-center">
                     <div class="w-1/3 bg-lightest h-1 rounded-full hover:bg-green"></div>
-                </div>
+                </div> -->
              </div>
          </div>
      </div>
@@ -83,6 +84,7 @@ export default {
             processTime:null,
             currentTime:null,
             pause:true,
+            audio:null,
             count:0
         };
     },
@@ -99,6 +101,9 @@ export default {
         this.emitter.on('process-time',data =>{
             this.processTime = data.process
             this.currentTime = data.current
+        })
+        this.emitter.on('volume',data =>{
+            this.audio = data
         })
     },
 
@@ -126,6 +131,10 @@ export default {
         preSong(){
             this.emitter.emit('pre-song',1)
             console.log(this.count)
+        },
+        volumeControl(e){
+           this.audio.volume = e.currentTarget.value / 100
+        // console.log(this.audio.volume)
         }
     },
     computed:{

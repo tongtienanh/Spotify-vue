@@ -19,7 +19,7 @@
     </div>
     <div 
     class="bg-darkest px-10 pt-6">
-        <div class=" flex items-center">
+        <!-- <div class=" flex items-center">
             <button class="flex transform hover:scale-110">
                 <div class="w-14 h-14 rounded-full bg-green flex justify-center items-center">
                     <i class="material-icons text-white text-4xl ">play_arrow</i>
@@ -27,7 +27,7 @@
             </button>
             <i class="material-icons text-3xl text-time mx-8">favorite_border</i>
             <i class="material-icons text-3xl text-time ">more_horiz</i>
-        </div>
+        </div> -->
         <div class="flex justify-between pt-6 pb-3">
             <div class="flex items-center">
                 <span class="text-lightest text-xl mr-4">#</span>
@@ -53,7 +53,7 @@
                         <span class="text-time text-xs font-semibold">{{song.creator}}</span>
                     </div>
                 </div>
-                <span @click.stop="likeSong(song)" :class="isLike ? 'bg-green' : '' " class="text-lightest material-icons" style="font-size: 18px;">favorite_border</span>
+                <span @click.stop="likeSong(song)" :class="isLike ? 'bg-green' : '' " class="text-lightest material-icons" style="font-size: 18px;"></span>
             </div>
         </div>
     </div>
@@ -78,7 +78,8 @@ export default {
             index:null,
             nextSong:null,
             isLike:null,
-            likedSong:[]
+            likedSong:[],
+            volume:null
         };
     },
 
@@ -94,6 +95,7 @@ export default {
             this.audio.src = ''
             this.index += data
             this.audio = new Audio(this.checkNextSong.music)
+            this.emitter.emit('volume',this.audio)
             this.audio.play()
             this.emitter.emit('play-song',{data:this.checkNextSong,isPlaying:this.isPlaying,isData:this.isData})
             var that = this
@@ -113,6 +115,7 @@ export default {
             this.index +=data
             this.audio = new Audio(this.checkNextSong.music)
             this.audio.play()
+            this.emitter.emit('volume',this.audio)
             this.emitter.emit('play-song',{data:this.checkNextSong,isPlaying:this.isPlaying,isData:this.isData})
             var that = this
             that.audio.addEventListener("loadeddata", function() {
@@ -129,6 +132,7 @@ export default {
             this.audio.src = ''
             this.index -= data
             this.audio = new Audio(this.checkNextSong.music)
+            this.emitter.emit('volume',this.audio)
             this.audio.play()
             this.emitter.emit('play-song',{data:this.checkNextSong,isPlaying:this.isPlaying,isData:this.isData})
             var that = this
@@ -167,6 +171,7 @@ export default {
             this.index = data.key
             this.emitter.emit('play-song',{data:data.song,isPlaying:this.isPlaying,isData:this.isData})
             this.audio = new Audio(data.song.music)
+            this.emitter.emit('volume',this.audio)
             this.audio.play()
             var that = this
              this.audio.addEventListener('ended',function(){

@@ -36,6 +36,7 @@
                         class="bg-light shadow-default h-32 mt-2 p-1 w-49 absolute right-0" style="width:196px">
                             <p 
                             v-for="(profile,index) in profiles" :key="index"
+                            @click="signOut(profile.name)"
                             :class="`text-white rounded-sm hover:bg-dark py-2 pl-3 pr-4 flex justify-between cursor-pointer items-center `"
                             >{{profile.name}}
                             <span class="material-icons font-thin transform rotate-180">{{profile.icon}}</span>
@@ -49,7 +50,7 @@
 </template>
 
 <script>
-import { projectAuth } from '../configs/firebase.js'
+import Token from '../helpers/token'
 import Content from './Content.vue'
 export default {
     name: 'SpotifyContent',
@@ -74,14 +75,7 @@ export default {
         window.addEventListener('scroll', this.scrollFn);
     },
     mounted() {
-            this.userInfo = projectAuth.displayName
-            var that = this
-            projectAuth.onAuthStateChanged(function(user){
-                if(user){
-                    console.log(user)
-                    that.userInfo = user.displayName
-                }
-            })
+           
     },
     destroyed () {
     window.removeEventListener('scroll', this.scrollFn);
@@ -97,6 +91,11 @@ export default {
         },
         inputText(){
            this.emitter.emit('search-text',this.searchText)
+        },
+        signOut(name){
+            if(name !== 'Đăng xuất') return
+            Token.removeToken()
+            this.$router.push({name:'Login'})
         }
     },
     computed:{

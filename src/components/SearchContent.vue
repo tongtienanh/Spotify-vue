@@ -76,7 +76,13 @@ export default {
             processTime:null,
         };
     },
-
+    created(){
+        this.emitter.on('stop-playing',()=>{
+            if(this.audio){
+                this.audio.src = ''
+            }
+        })
+    },
     mounted() {
         this.emitter.on('search-text',data=>{
             this.searchText = data 
@@ -97,9 +103,7 @@ export default {
     },
     methods: {
         play(data){
-            if(this.audio != null){
-                this.audio.src = ''
-            }
+            this.emitter.emit('stop-playing')
             this.isData = true
             this.isPlaying = true
             this.audio = new Audio(data.music)

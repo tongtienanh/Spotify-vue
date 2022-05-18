@@ -148,6 +148,13 @@ export default {
         })
         console.log('dit nhau')
     },
+     created(){
+        this.emitter.on('stop-playing',()=>{
+             if(this.audio){
+                this.audio.src = ''
+            }
+        })
+    },
     computed:{
         musics(){
            return this.allSong = this.data = this.$store.state.music
@@ -163,6 +170,7 @@ export default {
     },
     methods: {
         playSong(data){
+            this.emitter.emit('stop-playing')
             if(this.audio){
                 this.audio.src= ''
             }

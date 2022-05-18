@@ -5,6 +5,7 @@ import Search from '../views/Search.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import LikedSong from '../views/LikedSong.vue'
+import TokenService from '../helpers/token'
 
 const routes = [{
         path: '/',
@@ -71,4 +72,15 @@ const router = createRouter({
     routes
 })
 
+// router.beforeEach((to, from,next) => {
+//     const loggedIn = !!TokenService.getToken()
+//     if ( to.name !== 'Login' && !loggedIn ){
+//         next({
+//           path: 'login/login',
+//           replace: true
+//         })
+//       } else {
+//         next();
+//       }
+// })
 export default router
